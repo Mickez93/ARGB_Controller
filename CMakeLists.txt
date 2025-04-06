@@ -20,7 +20,8 @@ qt_add_qml_module(ARGB_Controller
         Main.qml
         SOURCES
         SOURCES serialsender.h serialsender.cpp
-        SOURCES commandbuilder.h commandbuilder.cpp
+        SOURCES commandhandler.h commandhandler.cpp
+        SOURCES jsonfile.h jsonfile.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
