@@ -7,11 +7,15 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
     JSONfile jsonFileInstance;
-    QString jsonString = "{\"command\":\"L\"}";
+    QString jsonString = "{\"on\":true,\"bri\":255,\"seg\":[{\"col\":[[0,0,200]]}]}";
     jsonFileInstance.writeJSON(jsonString);
     QString string = "COM3";
     serialSender serialSenderInstance(string);
-    qDebug() << "poop";
+    string = jsonFileInstance.readJSON();
+    std::cout << string.toStdString() << std::endl;
+    serialSenderInstance.sendData(string);
+    string = "L";
+    serialSenderInstance.sendData(string);
 
     QQmlApplicationEngine engine;
     QObject::connect(

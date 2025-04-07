@@ -4,26 +4,32 @@ JSONfile::JSONfile() : filename("Command.json")
 {
     std::string basePath = "D:\\ARGB_Controller\\ARGB_Controller\\";
     filename = basePath + filename;
-    std::ofstream fileStream(filename);
-    fileStream.close();
+    fileStream.open(filename,std::fstream::out | std::fstream::in);
 
 }
 
-void JSONfile::readJSON()
+QString JSONfile::readJSON()
 {
-
+    if (!fileStream.is_open())
+    {
+        fileStream.open(filename, std::fstream::out | std::fstream::in);
+    }
+    fileStream.seekg(0, std::ios::beg);
+    char jsonFileContents[1000];
+    fileStream.getline(jsonFileContents,1000);
+    QString jsonQString(jsonFileContents);
+    return jsonQString;
 }
 
 void JSONfile::writeJSON(QString &jsonString)
 {
-    outStream.open(filename, std::ofstream::out | std::ofstream::app);
-    if (!outStream.is_open())
+
+    if (!fileStream.is_open())
     {
-        qDebug() << "Failed to open file for writing.";
-        return;
+        fileStream.open(filename, std::fstream::out | std::fstream::in);
     }
 
-    outStream << jsonString.toStdString() << std::endl;
+    fileStream << jsonString.toStdString() << std::endl;
 
 
 }

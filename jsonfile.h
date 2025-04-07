@@ -4,16 +4,16 @@
 #include <fstream>
 #include <string>
 #include <QDebug>
+#include <iostream>
 
 class JSONfile
 {
 public:
     JSONfile();
-    void readJSON();
+    QString readJSON();
     void writeJSON(QString &jsonString);
 private:
-    std::ofstream outStream;
-    std::ifstream inStream;
+    std::fstream fileStream;
     std::string filename;
 };
 

@@ -18,7 +18,7 @@ serialSender::serialSender(QString &portName, QObject *parent) :
         if (bytesWritten == -1) {
             qDebug() << "Failed to write data to serial port.";
         } else {
-            qDebug() << "Data 'L' sent successfully.";
+            //qDebug() << "Data 'L' sent successfully.";
         }
 
         // Wait for a response (this will block until data is available)
@@ -46,5 +46,37 @@ serialSender::serialSender(QString &portName, int baudRate, QSerialPort::DataBit
     if(serialPort->open(QIODeviceBase::ReadWrite))
     {
         qDebug() << "Serial port opened successfully.";
+    }
+}
+
+void serialSender::sendData(const QString &data)
+{
+    if(!serialPort->isOpen())
+    {
+        qDebug() << "Serial port is not open.";
+        return;
+    }
+    else
+    {
+        qDebug() << "Serial port is open.";
+    }
+
+    QByteArray dataToSend = data.toUtf8();
+    for (int i = 0; i < dataToSend.size(); ++i) {
+        qDebug() << "Byte" << i << ":" << (int)dataToSend[i];
+    }
+    qint64 bytesWritten = serialPort->write(dataToSend);;
+
+    if (bytesWritten == -1) {
+        qDebug() << "Failed to write data to serial port.";
+    } else {
+        //qDebug() << "Data 'L' sent successfully.";
+    }
+
+    if (serialPort->waitForReadyRead(5000)) { // Timeout after 5 seconds
+        QByteArray responseData = serialPort->readAll(); // Read all available data
+        qDebug() << "Received response:" << responseData;
+    } else {
+        qDebug() << "No response received within timeout period.";
     }
 };
