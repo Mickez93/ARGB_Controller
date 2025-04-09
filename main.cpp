@@ -2,6 +2,8 @@
 #include <QQmlApplicationEngine>
 #include "serialsender.h"
 #include "jsonfile.h"
+#include "commandhandler.h"
+#include <QDir>
 
 int main(int argc, char *argv[])
 {
@@ -16,6 +18,7 @@ int main(int argc, char *argv[])
     serialSenderInstance.sendData(string);
     string = "L";
     serialSenderInstance.sendData(string);
+    commandHandler commandHandlerInstance("jsonfiles.sqlite");
 
     QQmlApplicationEngine engine;
     QObject::connect(

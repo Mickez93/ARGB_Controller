@@ -4,8 +4,7 @@ project(ARGB_Controller VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick)
-find_package(Qt6 REQUIRED COMPONENTS SerialPort)
+find_package(Qt6 REQUIRED COMPONENTS Quick SerialPort Sql)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
@@ -22,6 +21,7 @@ qt_add_qml_module(ARGB_Controller
         SOURCES serialsender.h serialsender.cpp
         SOURCES commandhandler.h commandhandler.cpp
         SOURCES jsonfile.h jsonfile.cpp
+        SOURCES databaseaccess.h databaseaccess.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -39,6 +39,7 @@ target_link_libraries(
 ARGB_Controller
     PRIVATE Qt6::Quick
     PRIVATE Qt6::SerialPort
+    PRIVATE Qt6::Sql
 )
 
 include(GNUInstallDirs)

@@ -1,18 +1,22 @@
 #ifndef COMMANDHANDLER_H
 #define COMMANDHANDLER_H
-
+#include "databaseaccess.h"
 #include "jsonfile.h"
 
 class commandHandler
 {
 public:
-    commandHandler();
-    void sendCommand();
+    commandHandler(QString dbName);
+    ~commandHandler();
+    void sendCustomCommand();
+    void sendPreDefCommand();
     void commandResponse();
 
 private:
+    databaseaccess *db;
+    JSONfile *jsonFile;
     void formatCommand();
-    JSONfile *commandFile;
+
 };
 
 #endif // COMMANDHANDLER_H
