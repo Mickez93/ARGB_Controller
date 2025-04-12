@@ -4,6 +4,7 @@
 #include "jsonfile.h"
 #include "commandhandler.h"
 #include <QDir>
+#include "standardconfig.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,11 +15,11 @@ int main(int argc, char *argv[])
     QString string = "COM3";
     serialSender serialSenderInstance(string);
     string = jsonFileInstance.readJSON();
-    std::cout << string.toStdString() << std::endl;
     serialSenderInstance.sendData(string);
     string = "L";
     serialSenderInstance.sendData(string);
-    commandHandler commandHandlerInstance("jsonfiles.sqlite");
+    commandHandler commandHandlerInstance(QString::fromUtf8(DB_NAME));
+
 
     QQmlApplicationEngine engine;
     QObject::connect(
@@ -28,6 +29,40 @@ int main(int argc, char *argv[])
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.loadFromModule("ARGB_Controller", "Main");
+    QList<QObject*> rootObjects = engine.rootObjects();
+    QList<QObject*> childObjects;
+    QObject *currRootItem;
+    QObject *currChildItem;
+    while(!rootObjects.isEmpty())
+    {
+        currRootItem = rootObjects.front();
+        childObjects = currRootItem->children();
+
+         while(!childObjects.isEmpty())
+        {
+            currChildItem = childObjects.front();
+
+             if(currChildItem->objectName() == "clickBtn")
+            {
+                QObject::connect(currChildItem, SIGNAL(sendCommandSig()), &commandHandlerInstance, SLOT(sendCommand()));
+                qDebug() <<currChildItem->objectName();
+
+            }
+            childObjects.pop_front();
+        }
+
+        rootObjects.pop_front();
+
+    }
+
+
+
+
+
+
+
+
+
 
     return app.exec();
 }

@@ -12,8 +12,8 @@ class serialSender : public QObject
 public:
     serialSender(QString &portName, QObject *parent = nullptr);
 
-    serialSender(QString &portName, int baudRate, QSerialPort::DataBits dataBits,QSerialPort::Parity parity,
-                 QSerialPort::StopBits stopBits, QObject *parent = nullptr);
+    serialSender(const QString &portName, const int baudRate, const QSerialPort::DataBits dataBits,const QSerialPort::Parity parity,
+                 const QSerialPort::StopBits stopBits, QObject *parent = nullptr);
 
     void sendData(const QString &data);
 private:

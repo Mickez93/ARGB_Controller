@@ -1,7 +1,7 @@
 #include "commandHandler.h"
 #define BASE_PATH "D:\\ARGB_Controller\\ARGB_Controller\\"
 
-commandHandler::commandHandler(QString dbName)
+commandHandler::commandHandler(const QString &dbName)
 {
     // Initialize the database
     db = new databaseaccess(BASE_PATH + dbName);
@@ -22,4 +22,9 @@ void commandHandler::commandResponse()
 commandHandler::~commandHandler()
 {
     delete db;
+}
+
+void commandHandler::sendCommand()
+{
+    qDebug() << "Slot triggered";
 }

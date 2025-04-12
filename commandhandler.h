@@ -3,12 +3,15 @@
 #include "databaseaccess.h"
 #include "jsonfile.h"
 
-class commandHandler
+class commandHandler : public QObject
 {
+    Q_OBJECT
+
 public:
-    commandHandler(QString dbName);
+    commandHandler(const QString &dbName);
     ~commandHandler();
     void sendCustomCommand();
+    void createPreDefCommand();
     void sendPreDefCommand();
     void commandResponse();
 
@@ -16,6 +19,11 @@ private:
     databaseaccess *db;
     JSONfile *jsonFile;
     void formatCommand();
+
+public slots:
+    void sendCommand();
+
+
 
 };
 

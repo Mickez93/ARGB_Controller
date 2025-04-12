@@ -1,6 +1,6 @@
 #include "databaseaccess.h"
 
-databaseaccess::databaseaccess(QString dbName)
+databaseaccess::databaseaccess(const QString &dbName)
 {
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
@@ -29,7 +29,7 @@ void databaseaccess::initializeDatabase()
 
 }
 
-void databaseaccess::fetchjsonfile(QString filename)
+void databaseaccess::fetchjsonfile(const QString &filename)
 {
     QSqlQuery query;
     query.prepare("SELECT id, filename FROM json_files WHERE filename = :filename LIMIT 1");
@@ -51,7 +51,7 @@ void databaseaccess::fetchjsonfile(QString filename)
     }
 }
 
-void databaseaccess::insertJsonFile(QString filename)
+void databaseaccess::insertJsonFile(const QString &filename)
 {
     QSqlQuery query;
     query.prepare("INSERT INTO json_files (filename) VALUES (:poop)");

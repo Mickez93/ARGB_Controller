@@ -35,8 +35,8 @@ serialSender::serialSender(QString &portName, QObject *parent) :
     }
 };
 
-serialSender::serialSender(QString &portName, int baudRate, QSerialPort::DataBits dataBits,QSerialPort::Parity parity,
-             QSerialPort::StopBits stopBits, QObject *parent) :
+serialSender::serialSender(const QString &portName, const int baudRate, const QSerialPort::DataBits dataBits,const QSerialPort::Parity parity,
+                           const QSerialPort::StopBits stopBits, QObject *parent) :
     QObject(parent), serialPort(new QSerialPort(portName))
 {
     serialPort->setBaudRate(baudRate);

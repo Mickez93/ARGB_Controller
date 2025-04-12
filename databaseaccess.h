@@ -2,13 +2,12 @@
 #define DATABASEACCESS_H
 #include <QSqlDatabase>
 #include <QSqlQuery>
-#include <iostream>
 class databaseaccess
 {
 public:
-    databaseaccess(QString dbName);
-    void fetchjsonfile(QString filename);
-    void insertJsonFile(QString filename);
+    databaseaccess(const QString &dbName);
+    void fetchjsonfile(const QString &filename);
+    void insertJsonFile(const QString &filename);
 private:
     void initializeDatabase();
     QString dbName;

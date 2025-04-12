@@ -21,7 +21,7 @@ QString JSONfile::readJSON()
     return jsonQString;
 }
 
-void JSONfile::writeJSON(QString &jsonString)
+void JSONfile::writeJSON(const QString &jsonString)
 {
 
     if (!fileStream.is_open())
