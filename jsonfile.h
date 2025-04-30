@@ -8,9 +8,9 @@
 class JSONfile
 {
 public:
-    JSONfile();
+    JSONfile(const QString &jsonFileName);
     QString readJSON();
-    void writeJSON(const QString &jsonString);
+    void writeJSON(const QString &jsonString, std::fstream::openmode mode = std::fstream::out);
 private:
     std::fstream fileStream;
     std::string filename;

@@ -1,14 +1,14 @@
 #ifndef COMMANDHANDLER_H
 #define COMMANDHANDLER_H
-#include "databaseaccess.h"
 #include "jsonfile.h"
+#include <QObject>
 
 class commandHandler : public QObject
 {
     Q_OBJECT
 
 public:
-    commandHandler(const QString &dbName);
+    commandHandler();
     ~commandHandler();
     void sendCustomCommand();
     void createPreDefCommand();
@@ -16,12 +16,15 @@ public:
     void commandResponse();
 
 private:
-    databaseaccess *db;
     JSONfile *jsonFile;
     void formatCommand();
 
 public slots:
-    void sendCommand();
+    void btnSendCommand(const QString JSONfile);
+signals:
+    void sendSerialCommandSignal(const QString &jsonFileContents);
+
+
 
 
 

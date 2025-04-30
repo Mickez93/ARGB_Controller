@@ -1,12 +1,9 @@
 #include "commandHandler.h"
 #define BASE_PATH "D:\\ARGB_Controller\\ARGB_Controller\\"
 
-commandHandler::commandHandler(const QString &dbName)
+commandHandler::commandHandler()
 {
-    // Initialize the database
-    db = new databaseaccess(BASE_PATH + dbName);
-    db->insertJsonFile("poopster.json");
-    db->fetchjsonfile("poopster.json");
+
 }
 
 void commandHandler::sendCustomCommand()
@@ -21,10 +18,17 @@ void commandHandler::commandResponse()
 
 commandHandler::~commandHandler()
 {
-    delete db;
 }
 
-void commandHandler::sendCommand()
+void commandHandler::btnSendCommand(const QString jsonFileName)
 {
-    qDebug() << "Slot triggered";
+    jsonFile = new JSONfile(jsonFileName);
+    emit sendSerialCommandSignal(jsonFile->readJSON());
+    delete jsonFile;
+
+}
+
+void sendSerialCommandSignal(const QString &jsonFileContents)
+{
+
 }

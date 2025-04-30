@@ -6,7 +6,7 @@ class databaseaccess
 {
 public:
     databaseaccess(const QString &dbName);
-    void fetchjsonfile(const QString &filename);
+    QString fetchjsonfile(const QString &filename);
     void insertJsonFile(const QString &filename);
 private:
     void initializeDatabase();

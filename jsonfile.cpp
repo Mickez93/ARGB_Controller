@@ -1,10 +1,12 @@
 #include "jsonfile.h"
 
-JSONfile::JSONfile() : filename("Command.json")
+JSONfile::JSONfile(const QString &jsonFileName)
 {
     std::string basePath = "D:\\ARGB_Controller\\ARGB_Controller\\";
-    filename = basePath + filename;
-    fileStream.open(filename,std::fstream::out | std::fstream::in);
+    filename = basePath + jsonFileName.toStdString();
+    //Open the stream only for writing to make sure the file is created if it does not already exist
+    fileStream.open(filename,std::fstream::app);
+    fileStream.close();
 
 }
 
@@ -12,7 +14,7 @@ QString JSONfile::readJSON()
 {
     if (!fileStream.is_open())
     {
-        fileStream.open(filename, std::fstream::out | std::fstream::in);
+        fileStream.open(filename, std::fstream::in);
     }
     fileStream.seekg(0, std::ios::beg);
     char jsonFileContents[1000];
@@ -21,12 +23,17 @@ QString JSONfile::readJSON()
     return jsonQString;
 }
 
-void JSONfile::writeJSON(const QString &jsonString)
+void JSONfile::writeJSON(const QString &jsonString, std::fstream::openmode mode)
 {
 
     if (!fileStream.is_open())
     {
-        fileStream.open(filename, std::fstream::out | std::fstream::in);
+        if(mode == std::fstream::out)
+        fileStream.open(filename, std::fstream::out);
+    }
+    else
+    {
+        fileStream.open(filename, std::fstream::out | std::fstream::app);
     }
 
     fileStream << jsonString.toStdString() << std::endl;

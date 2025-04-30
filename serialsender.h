@@ -15,9 +15,16 @@ public:
     serialSender(const QString &portName, const int baudRate, const QSerialPort::DataBits dataBits,const QSerialPort::Parity parity,
                  const QSerialPort::StopBits stopBits, QObject *parent = nullptr);
 
-    void sendData(const QString &data);
+    bool sendData(const QString &data);
 private:
     QSerialPort *serialPort;
+
+public slots:
+    void sendSerialCommand(const QString &data)
+    {
+        sendData(data);
+        qDebug() << "sendSerialCommandslot triggered \n";
+    }
 };
 
 #endif // SERIALSENDER_H

@@ -29,26 +29,28 @@ void databaseaccess::initializeDatabase()
 
 }
 
-void databaseaccess::fetchjsonfile(const QString &filename)
+QString databaseaccess::fetchjsonfile(const QString &filename)
 {
     QSqlQuery query;
+    QString file;
     query.prepare("SELECT id, filename FROM json_files WHERE filename = :filename LIMIT 1");
     query.bindValue(":filename", filename);  // Bind the filename parameter
 
     // Execute the query
     if (!query.exec()) {
         qDebug() << "Error fetching filename from database:";
-        return;
+        return nullptr;
     }
 
     // If we find the file, print its ID and filename
     if (query.next()) {
         int id = query.value(0).toInt();     // Get the 'id' column
-        QString file = query.value(1).toString();  // Get the 'filename' column
+        file = query.value(1).toString();  // Get the 'filename' column
         qDebug() << "File found: ID =" << id << ", Filename =" << file;
     } else {
         qDebug() << "No file found with the name:" << filename;
     }
+    return file;
 }
 
 void databaseaccess::insertJsonFile(const QString &filename)
