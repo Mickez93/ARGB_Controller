@@ -15,24 +15,23 @@ Window {
     //Button to send commands
     Clickbtn
     {
-        objectName: "clickBtn"
-        height: myComboBox.height
+        id: sendCommandBtn
+        height: fileSelector.height
         anchors
         {
-            left: myComboBox.right
+            left: fileSelector.right
             verticalCenter: parent.verticalCenter
             leftMargin: 20
         }
         onClicked: {
-            // Emit the signal when the button is clicked
-            CommandHandler.btnSendCommand(myComboBox.currentText);
+            CommandHandler.sendCommand(fileSelector.currentText);
         }
 
     }
 
     ComboBox
     {
-        id: myComboBox
+        id: fileSelector
         height: 30
         width: 200
         anchors.right: parent.horizontalCenter
@@ -59,6 +58,9 @@ Window {
             from: 0
             to: 255
             stepSize: 1
+            onValueChanged: {
+                CommandHandler.setRGBValue(CommandHandler.Red,redSlider.value);
+            }
 
         }
         Slider
@@ -67,6 +69,9 @@ Window {
             from: 0
             to: 255
             stepSize: 1
+            onValueChanged: {
+                CommandHandler.setRGBValue(CommandHandler.Green,greenSlider.value);
+            }
         }
         Slider
         {
@@ -74,6 +79,9 @@ Window {
             from: 0
             to: 255
             stepSize: 1
+            onValueChanged: {
+                CommandHandler.setRGBValue(CommandHandler.Blue,blueSlider.value);
+            }
         }
     }
 }

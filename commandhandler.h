@@ -2,27 +2,39 @@
 #define COMMANDHANDLER_H
 #include "jsonfile.h"
 #include <QObject>
+#include <fstream>
 
 class commandHandler : public QObject
 {
     Q_OBJECT
 
+
 public:
     commandHandler();
     ~commandHandler();
-    void sendCustomCommand();
-    void createPreDefCommand();
-    void sendPreDefCommand();
     void commandResponse();
+    int getRGBValue() const;
+
+    enum Color
+    {
+        Red,
+        Green,
+        Blue
+    };
+    Q_ENUM(Color)
+    Q_INVOKABLE void setRGBValue(Color c, const int value);
 
 private:
     JSONfile *jsonFile;
-    void formatCommand();
+    JSONfile liveJsonFile;
+    int m_rValue = 0;
+    int m_gValue = 0;
+    int m_bValue = 0;
 
 public slots:
-    void btnSendCommand(const QString JSONfile);
+    void sendCommand(const QString JSONfile);
 signals:
-    void sendSerialCommandSignal(const QString &jsonFileContents);
+    void sendSerialCommandSignal(const QString &jsonFileContents = NULL);
 
 
 
